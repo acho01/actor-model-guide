@@ -25,3 +25,7 @@ Very informative video from tech talk with live coding a FP application from scr
 **Category Theory for Programmers** https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/. https://github.com/hmemcpy/milewski-ctfp-pdf
 
 One of the best resources on category theory and FP. Github contains all the coding examples used in the book.
+
+**Demystifying the Monad in Scala** https://www.freecodecamp.org/news/demystifying-the-monad-in-scala-cc716bb6f534/
+
+This blog perfectly explains Monad idea with some comprehensive examples in scala.
