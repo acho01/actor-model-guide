@@ -29,3 +29,8 @@ One of the best resources on category theory and FP. Github contains all the cod
 **Demystifying the Monad in Scala** https://www.freecodecamp.org/news/demystifying-the-monad-in-scala-cc716bb6f534/
 
 This blog perfectly explains Monad idea with some comprehensive examples in scala.
+
+**Functional Programming and Category Theory** https://nikgrozev.com/2016/03/14/functional-programming-and-category-theory-part-1-categories-and-functors/
+https://nikgrozev.com/2016/04/11/functional-programming-and-category-theory-part-2-applicative-functors/
+
+Another well structured blog about some major concepts of category theory implemented in scala
