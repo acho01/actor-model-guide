@@ -19,3 +19,9 @@ This guy has lot's of videos on scala, but the link mentioned above is step-by-s
 **Coding Tech** https://www.youtube.com/watch?v=m40YOZr1nxQ
 
 Very informative video from tech talk with live coding a FP application from scratch using scala.
+
+## Blogs
+
+**Category Theory for Programmers** https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/. https://github.com/hmemcpy/milewski-ctfp-pdf
+
+One of the best resources on category theory and FP. Github contains all the coding examples used in the book.
