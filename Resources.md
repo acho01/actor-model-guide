@@ -1,0 +1,21 @@
+# Resources
+
+## Books
+
+**Scala In Action** https://www.manning.com/books/scala-in-action
+
+Book gives perfect overall undestanding of scala and it's FP nature. Pay attention to mentioned links while reading.
+
+## Youtube
+
+**Rock the JVM** https://www.youtube.com/channel/UCRS4DvO9X7qaqVYUW2_dwOw
+
+One of the best free youtube resources on scala. They also have paid courses on https://rockthejvm.com/
+
+**Jakub Kozłowski** https://www.youtube.com/watch?v=EIE-6gx_qi0&list=PL1NS3pe5mmu3goZ5sQI-q5nFXtw1jESy0
+
+This guy has lot's of videos on scala, but the link mentioned above is step-by-step live coding of a real project in scala using FP.
+
+**Coding Tech** https://www.youtube.com/watch?v=m40YOZr1nxQ
+
+Very informative video from tech talk with live coding a FP application from scratch using scala.
