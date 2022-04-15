@@ -34,3 +34,13 @@ This blog perfectly explains Monad idea with some comprehensive examples in scal
 https://nikgrozev.com/2016/04/11/functional-programming-and-category-theory-part-2-applicative-functors/
 
 Another well structured blog about some major concepts of category theory implemented in scala
+
+**Why Functional Programming Matters** https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf
+
+Great paper explaining concepts of FM in depth.
+
+**Actor Model** https://dl.acm.org/doi/pdf/10.1145/512927.512942
+https://www.youtube.com/watch?v=7erJ1DV_Tlo&t=688s
+
+First paper about Actor model released in 1973 by Carl Hewitt. Along side with the great video of him explaining actor model in very simple manner.
+Actor model enables special abstraction in concurrency that is implemented by Akka and included in scala as actor model implementation.
