@@ -39,7 +39,7 @@ Another well structured blog about some major concepts of category theory implem
 
 Great paper explaining concepts of FM in depth.
 
-**Actor Model** https://dl.acm.org/doi/pdf/10.1145/512927.512942
+**Actor Model** https://www.ijcai.org/Proceedings/73/Papers/027B.pdf
 https://www.youtube.com/watch?v=7erJ1DV_Tlo&t=688s
 
 First paper about Actor model released in 1973 by Carl Hewitt. Along side with the great video of him explaining actor model in very simple manner.
