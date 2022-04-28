@@ -70,3 +70,11 @@ Brief and short article about concurrency in akka using actors
 **Concurrency in akka actor model long article** https://www.toptal.com/scala/concurrency-and-fault-tolerance-made-easy-an-intro-to-akka
 
 In depth overview of concurrency and faul-tolerance of actor model implemented in Akka
+
+**More on actor concurrency in akka** https://www.linkedin.com/pulse/java-concurrency-akka-actor-model-setting-stage-chellimuthu/
+
+Another good resource for actor concurrency particularly in akka
+
+**Simplifying concurrency: Actors. In particular, AKKA. - Kristo Iila**https://www.youtube.com/watch?v=cgOfEVid4Cs
+
+Great video explanation of actor concurrency model
