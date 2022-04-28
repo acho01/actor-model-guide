@@ -82,3 +82,7 @@ Great video explanation of actor concurrency model
 **Java threads vs Akka actors** https://home.cs.colorado.edu/~kena/classes/5448/s11/presentations/srinivas_panchapakesan_pres.pdf
 
 Nice ppt comparing traditional java threading model with actor model
+
+**Scala Actors 101 - Threadless and Scalable** https://dzone.com/articles/scala-threadless-concurrent
+
+More on threadless scala actors, little bit old article, no mention of akka, but still conceptually usefull
