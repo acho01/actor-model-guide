@@ -58,3 +58,15 @@ More about actors particularly arbiters
 **Everything you wanted to know about the Actor** https://alex-karaberov.medium.com/everything-you-always-wanted-to-know-about-the-actor-model-but-were-afraid-to-ask-b6eee8722953
 
 Great article on medium about actor model. More conceptual and abstract discussion, without implementation details and technologies
+
+**Intro to actor model and akka** https://blog.knoldus.com/introduction-actor-model-akka-nutshell-1/
+
+A small article that might still be very informative.
+
+**Concurrency in akka actor model short article** https://medium.com/@knoldus/achieving-concurrency-with-akka-actors-a115142a8721
+
+Brief and short article about concurrency in akka using actors
+
+**Concurrency in akka actor model long article** https://www.toptal.com/scala/concurrency-and-fault-tolerance-made-easy-an-intro-to-akka
+
+In depth overview of concurrency and faul-tolerance of actor model implemented in Akka
