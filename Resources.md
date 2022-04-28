@@ -44,3 +44,13 @@ https://www.youtube.com/watch?v=7erJ1DV_Tlo&t=688s
 
 First paper about Actor model released in 1973 by Carl Hewitt. Along side with the great video of him explaining actor model in very simple manner.
 Actor model enables special abstraction in concurrency that is implemented by Akka and included in scala as actor model implementation.
+
+**Actor Model of Computation:
+Scalable Robust Information Systems** https://arxiv.org/pdf/1008.1459.pdf
+
+More about actor by Carl Hewitt
+
+**Physical Indeterminacy in
+Digital Computation** https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3459566
+
+More about actors particularly arbiters
