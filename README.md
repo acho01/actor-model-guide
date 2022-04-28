@@ -90,3 +90,7 @@ Nice ppt comparing traditional java threading model with actor model
 **Scala Actors 101 - Threadless and Scalable** https://dzone.com/articles/scala-threadless-concurrent
 
 More on threadless scala actors, little bit old article, no mention of akka, but still conceptually usefull
+
+**Lightweight Actor Threads** https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.85.3148&rep=rep1&type=pdf
+
+Paper discusses concept behind lightweight threads that actors use in JVM
