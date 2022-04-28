@@ -54,3 +54,7 @@ More about actor by Carl Hewitt
 Digital Computation** https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3459566
 
 More about actors particularly arbiters
+
+**Everything you wanted to know about the Actor** https://alex-karaberov.medium.com/everything-you-always-wanted-to-know-about-the-actor-model-but-were-afraid-to-ask-b6eee8722953
+
+Great article on medium about actor model. More conceptual and abstract discussion, without implementation details and technologies
