@@ -1,3 +1,7 @@
+# scala-guide
+### Repository contains all resources used by me while learning scala. As my curiosity led me to actor model and particularly Akka, list consists of some basic scala resources but mostly moves around actors.
+
+
 # Resources
 
 ## Books
