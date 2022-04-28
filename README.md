@@ -94,3 +94,6 @@ More on threadless scala actors, little bit old article, no mention of akka, but
 **Lightweight Actor Threads** https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.85.3148&rep=rep1&type=pdf
 
 Paper discusses concept behind lightweight threads that actors use in JVM
+
+**Lightweight Actor Threads 2** http://lampwww.epfl.ch/~odersky/papers/jmlc06.pdfhttp://lampwww.epfl.ch/~odersky/papers/jmlc06.pdf
+Another paper by Martin Odersky discussing threading model behind actor
