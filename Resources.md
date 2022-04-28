@@ -78,3 +78,7 @@ Another good resource for actor concurrency particularly in akka
 **Simplifying concurrency: Actors. In particular, AKKA. - Kristo Iila**https://www.youtube.com/watch?v=cgOfEVid4Cs
 
 Great video explanation of actor concurrency model
+
+**Java threads vs Akka actors** https://home.cs.colorado.edu/~kena/classes/5448/s11/presentations/srinivas_panchapakesan_pres.pdf
+
+Nice ppt comparing traditional java threading model with actor model
