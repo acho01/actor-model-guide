@@ -97,3 +97,7 @@ Paper discusses concept behind lightweight threads that actors use in JVM
 
 **Lightweight Actor Threads 2** http://lampwww.epfl.ch/~odersky/papers/jmlc06.pdfhttp://lampwww.epfl.ch/~odersky/papers/jmlc06.pdf
 Another paper by Martin Odersky discussing threading model behind actor
+
+**Concurrency Talk** https://www.youtube.com/watch?v=37wFVVVZlVU
+
+Gold on youtube, creators of famous concurrency models having a panel discussion
