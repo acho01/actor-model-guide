@@ -105,3 +105,7 @@ Gold on youtube, creators of famous concurrency models having a panel discussion
 **CSP concurrency model** https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/tony-hoare/csp.html
 
 Great resource explaining CSP concurrency model, which can be considered kinda like actor model
+
+**Akka Concurrency** https://www.linkedin.com/pulse/concurrency-akka-deep-dive-prateek-kulkarni/
+
+Concurrency article about Akka concurrency
