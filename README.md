@@ -114,3 +114,6 @@ Concurrency article about Akka concurrency
 The Actor Model** https://people.eecs.berkeley.edu/~marten/pdf/tamt.pdf 
 
 **More actor model** http://lampwww.epfl.ch/~phaller/doc/haller12-Integrating_actors_in_mainstream_technologies.pdf
+
+**Gul Agha's Doctoral Dissertation on Actor Model** https://dspace.mit.edu/handle/1721.1/6952
+This resource looks like a A-Z book about actor model.
