@@ -109,3 +109,8 @@ Great resource explaining CSP concurrency model, which can be considered kinda l
 **Akka Concurrency** https://www.linkedin.com/pulse/concurrency-akka-deep-dive-prateek-kulkarni/
 
 Concurrency article about Akka concurrency
+
+**Theory and Application of Multithreading
+The Actor Model** https://people.eecs.berkeley.edu/~marten/pdf/tamt.pdf 
+
+**More actor model** http://lampwww.epfl.ch/~phaller/doc/haller12-Integrating_actors_in_mainstream_technologies.pdf
