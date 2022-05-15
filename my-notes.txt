@@ -1,0 +1,205 @@
+What is an actor?
+Actor is a container for State, Behavior, Mailbox, Child Actors and a Supervisor Strategy. All of this as a container is referenced
+by ActorRef, a reference object that can be freely pass by actors.Reference can even point to the actual actor on the differen machine.
+=====================
+State: 
+state contains just ordinary state as u may imagine, some data that actor holds. What is important when talking about state
+is how safe it is. Can it be corrupted by some other actors or threads? Nope, each and every actor has its own thread assigned to it.
+No locks, no special thread safety. Actors are by default thread safe as only one, their thread can access its state.
+=====================
+Behavior:
+Actors are parametrized, on the parameter which they accept as receiving messages. Actors can difine different behaviors, hence
+accept different messages. Initialy messages are sent to ActorRef, and it has the behavior to receive the message and pass to the
+actual actor.The parametrisation part ensures that parameters are checked at compile time, therefore all the messages that are sent
+to ActorRefs have correct types.
+=====================
+Mailbox:
+Basically mailbox is just a queue of the actor. The place where messages are delivered and then consumed by the actor.
+BY default mailbox is FIFO, messages are consumed by the order they where enqued in the mailbox. 
+But sending multiple messages to target actor does not aitomaticly imply that they will be delivered to the mailbox in the same order.
+Sending from same actor to one target, will have the proper ordering.
+But sending from different actors to one target might not. As mailboxes are ordinary queue-s they can be configured to 
+become priority queues and consume messages with special priority.
+=====================
+Child Actors:
+Each actor is potentially a parent: if it creates children for delegating sub-tasks, it will automatically supervise them. The list of children is maintained within the actor’s context and the actor has access to it. Modifications to the list are done by spawning or stopping children and these actions are reflected immediately. The actual creation and termination actions happen behind the scenes in an asynchronous way, so they do not “block” their parent.
+
+
+When actors die, terminate they are either restarted by its supervisor or stopped. When they are stopped all active messages are 
+passed to dead letter mailbox.
+======================
+
+Supervision:
+supervising is the thing of fault-tolerance in actor model. When actor fails for any reason, network or something else supervisor(parent)
+canhandle this failure. By following 3 strategies:
+1. Resume the actor, keeping its accumulated internal state
+2. Restart the actor, clearing out its accumulated internal state, with a potential delay starting again
+3. Stop the actor permanently
+
+There are 2 actors automaticly started(spawned) in actor system:
+/user: the user guardian actor 
+this actor is provided by user when creating ActorSystem
+/system-guardian:
+
+If actor is sure that corruption of one of its children has not effected him or any other child then he restarts the
+corrupted child. Supervisor actor changes Behaviour object of ActorRef class, therefore the mailbox remains same
+and child actor resumes processing the same mailbox.
+
+In contrast to supervision when supervisor actor can monitor its child actor,
+There is a watch mechanism implemented in akka with which an actor can monitor any other actors state change.
+As there are only 2 visible states of actors exposed, either alive or dead. You can watch for termination of any other actor.
+
+Exceptions:
+If an exception is thrown while the message is processed(taken from mailbox and given to actor processor function)
+then this message is lost. You have to provide some exceptionn catch and retry logic to put this message again in the mailbox,
+or reprocess the method.
+
+exception has nothing to do with mailbox. if exception is thrown while processing the message, mailbox remains same.
+
+If exception is not caught in the actor, the supervision process is started.
+Normally exceptions are propagated up the callstack, but in actor system errors are propagated up in actor hierarcy
+and supervisor/parent actor decides how to handle the error
+
+For failures it is useful to apply the “let it crash” philosophy: instead of mixing fine grained recovery and correction of internal state that may have become partially invalid because of the failure with the business logic we move that responsibility somewhere else. For many cases the resolution can then be to “crash” the actor, and start a new one, with a fresh state that we know is valid.
+In Akka this “somewhere else” is called supervision. Supervision allows you to declaratively describe what should happen when certain types of exceptions are thrown inside an actor.
+
+
+==============================
+
+
+Actor refs and paths:
+Actor reference is a subtype of ActorRef which enables us to send messages to the actor.
+Every actor can obtain its local reference trhu self. This reference can be included in messages
+to let other actors send replies
+
+There are multiple types od actorrefs:
+1. Purely local actor references, can not be used for actors that are on remote machines
+2. local actor refs are used when actors within the same jvm have some network communication.
+3. remote actor refs, will ensure that messages will be delivered serialized thru network to remote machines
+
+Actor paths:
+actor patsh are kinda hierarchical representation of actors just like in file system.
+actors referense designates single actor, and it matches actor's lifcycle.
+actors path never becomes invalid, u can create an actor path without actor, but u can not create actor ref without creating actor.
+u can create an actor with Ref1 and Path1, then u terminate this actor and create new actor with Ref2 and same Path1.
+even tho paths are same, this actors are not.
+
+actor paths contains info about protocol and naming jhierarchy:
+"akka://my-sys/user/service-a/worker1"               // purely local
+"akka://my-sys@host.example.com:5678/user/service-b" // remote
+
+Two actor references are equal when they have the same path and point to the same actor incarnation.
+Actor that is recreated with same path and the terminated actor are not equal.
+However restarting an actor just recreates the same incarnation and the restarting is not even visible to ActorRef.
+
+When an actor is terminated, its reference will point to the dead letter mailbox, DeathWatch will publish its final transition and in general it is not expected to come back to life again (since the actor life cycle does not allow this).
+
+At the root of the path hierarchy resides the root guardian above which all other actors are found; its name is "/". The next level consists of the following:
+
+"/user" is the guardian actor for all user-created top-level actors; actors created using ActorSystem.actorOf are found below this one.
+"/system" is the guardian actor for all system-created top-level actors, e.g. logging listeners or actors automatically deployed by configuration at the start of the actor system.
+"/deadLetters" is the dead letter actor, which is where all messages sent to stopped or non-existing actors are re-routed (on a best-effort basis: messages may be lost even within the local JVM).
+"/temp" is the guardian for all short-lived system-created actors, e.g. those which are used in the implementation of ActorRef.ask.
+"/remote" is an artificial path below which all actors reside whose supervisors are remote actor references
+The need to structure the name space for actors like this arises from a central and very simple design goal: everything in the hierarchy is an actor, and all actors function in the same way.
+
+====================
+Carl Hewit's actor notes:
+Actor is a fundamental unit of computation. World rotates around actors.
+As fundamebtal unit of computation it has to have 3 things:
+1. processing
+2. storage
+3. communication
+1 actor is not an actor, they come in systems. Everything is an actor. Actor has a mailbox, which is itseld an actor.
+Mailbox actor should have a mailbox itself which is an actor, and this is fucked up recursion :)
+This fucking recursion ends with the axioms:
+1. first axiom is when actor receives a message an actor can create another actor, it can send messages to other actors
+which addresses it has and it can say what it is gonna do for the next message.
+there is many2many relationship between actors and actor addresses. u can have multiple actors for one address
+if u are replicating them, or one actor for multiples addresses and these adrrreses may be forward to one another.
+How do I know if there are multiple actors behind this address, which is doing the work? U can never know,
+just like google search, it is everytime same address for google search, but it is not the same "google" every time that
+processes ourn requests.
+In conceptual actor model there is no gurantee delivery it means messages are sent atmost once.
+in general actor model does not provide ordering gurantees between sender and receiver actors.
+But Akka provides such guranteed that messages are deliered in sending order from Actor A to Actor B.
+There are no channels, u communicate directly with actors.
+synchronisation in actors is handled by primitive solution, that is handling 1 message at a time.
+no 2 message handlers can interact ro have any concurrency issues inside one actor.
+
+=====================================
+<<<<<<<<<<< Concurrency in actors >>>>>>>>>>>>
+All the complexity of creating and scheduling threads, receiving and dispatching messages, and handling race conditions and synchronization, is relegated to the framework to handle transparently.
+Akka ensures that each instance of an actor runs in its own lightweight thread and that messages are processed one at a time. In this way, each actor's state can be reliably maintained without the developer needing to explicitly worry about synchronization or race conditions.
+
+An Actor is a mathematical model of concurrent computation that encapsulate data, code and its own thread of control, and communicate asynchronously using immutable message passing techniques. When the basic architecture is shared-nothing, each actor seems to act in its own process space. And the success and scalability of the actor implementation depends a lot on the ability of the language to implement lightweight processes on top of the native threading model. Every actor has it's own mailbox for storing messages, implemented as asynchronous, race-free, non-blocking queues.
+
+Scala Actors are Lightweight
+JVM offers shared memory threads with locks as the primary form of concurrency abstractions. But shared memory threads are quite heavyweight and incur severe performance penalties from context switching overheads. For an actor implementation based on a one-to-one mapping with JVM threads, the process payload per Scala actor will not be as lightweight that we can spawn a million instances of an actor for a specific computation. Hence Scala actors have been designed as lightweight event objects, which get scheduled and executed on an underlying worker thread pool that gets automatically resized when all threads block on long running operations. In fact, Scala implements a unified model of actors - thread based and event based. Scala actors offer two form of suspension mechanisms - a full stack frame suspension(implemented as receive) and a suspension based on a continuation closure (implemented as react). In case of event based actors, a wait on react is represented by a continuation closure, i.e. a closure that captures the rest of the actor's computation. When the suspended actor receives a message that matches one of the patterns specified in the actor, the continuation is executed by scheduling the task to one of the worker threads from the underlying thread pool. The paper "Actors that Unify Threads and Events" by Haller and Odersky discusses the details of the implementation. >>>>>>> https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.85.3148&rep=rep1&type=pdf
+
+An actor is a process that executes a function. Here
+a process is a lightweight user-space thread (not to be
+confused with a typical heavyweight operating-system
+process).
+ Actors never share state and thus never need to compete
+for locks for access to shared data.
+ Instead, actors share data by sending messages that are
+immutable. Immutable data cannot be modified, so reads do
+not require a lock.
+ Messages are sent asynchronously and are buffered in an
+actor's mailbox.
+ A mailbox is essentially a queue with multiple producers
+(other actors) and a single consumer. A particular actor is
+driven by receiving messages from the mailbox based on
+pattern matching.
+
+
+========
+Actors managing threads in runtime:
+The central idea is as follows, When an actor is waiting to receive a message it is not represented as blocked thread,
+but as closure that is backed on senders thread.§
+
+Let's describe different implementations in actor concurrency:
+Imagine there is a scheduler thread and some worker threads in the thread pool.
+Actors are represented as Tasks. Time to time scheduler thread checks the task queue
+if there is a task in the task queue and all worker threads are blocked in this case
+it starts a new thread so thath task does not hang in the queue.
+
+
+
+==================== RockTheJvm =====================
+
+Actors are objects we can not access directly, just sending messages to them
+
+encapsulation is only valid for single-threaded model, it breaks when multiple threads access  shared data
+
+Can we assume any ordering of messages?
+
+Aren't we causing any race conditions on sending messages?
+
+Akka runs on JVM and it knows only threads, so how does this actor asynchronous magic work? 
+
+
+Akka is backed by an ordinary jvm threadpool. Akka manages to create way smaller amount of threads than actors.
+For instance it may create 100 threads to serve millions of actors. Basicly the actor consists of 2 main things
+a mail box and a message handler. Sending a message to an actor is simly enqwueuing the message in the mailbox.
+What akka does is that it schedules the actors to run on the actual threads. At some point akka wraps a particular
+actor with a particular thread. The message dequeue and handler are run inside this thread. It works just like an ordinary
+scheduler. This process gives somne gurantees: It gurantees that at any particular time only 1 thread at most will be accesing
+an actor. Actors appear to be single-threaded. As at most one thread is accesing actors private state at the same time there
+is no need for synchronisation or locking mechanisms. 1 other gurantee that akka gives is that message handling is atomic.
+A thread can not unschedule while handling a particular message.
+Akka has message delivery gurantees: At most once delivery, gurantees that messages will not be dublicate inside same actor.
+Also akka  has a very nice feature of message ordering for the fixed sender receievr actors. If A send m1 m2 to B, then B will consume 
+these messages in order, some messages can be lost but the ordering will be same.
+
+There are 2 very important things that is our responsibility. We should keep actor messages IMMUTABLE AND SERIALIZABLE.
+This properties are not checked at compile time, hopefuly akka provide case class that are created just for that.
+you should use case classes as messages for actors, they implement immutatbility as well as serializability.
+
+
+Actor that we put in ActorSystem() is the user guardian actor, therefore we should take care
+
+How exactly threads operate for actors?
+How actor behavior is updated in runtime?
+
