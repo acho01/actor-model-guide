@@ -200,6 +200,23 @@ you should use case classes as messages for actors, they implement immutatbility
 
 Actor that we put in ActorSystem() is the user guardian actor, therefore we should take care
 
+======================= in determinacy in Actor Model ========================
+Let's talk about non-determinacy and in-determinancy:
+Non, is the one we have in the turing machine. We flip a coin and we get head or tail
+and this way we non-determinasticaly decide which way to choose.
+
+
+non-determinism is the flipping coin example, as in NTM(nondeterministic turing machine)
+the choise of the road only depends on us flipping the coin.
+But as for indeterminacy that actor model has, it's about ambiguity not because of the choice but because it jsut worked out this way.
+Imagine we have an actor with counter integer initialy having value 0. And we have 2 messages go and stop. go will increment
+count by 1 and resend go to itself. stop will return count and terminate the actor. Suppose we simultaniously send stop and go messages
+to the actor, the value of count will only depend on how fast will stop message arrive to the actor. In theory this can be delayed and 
+count can become arbitrarily large. This indeterminacy is the key element of synchronization, the order of messages is indeterminate
+therefore if you try to acces 1 actor state from 2 different messages, there is indeterminacy in that, and here comes the arbiter
+arbiter provides this indeterminacy of arrived messages. (not sure yet if this is arbiters correct description)
+
+
 How exactly threads operate for actors?
 How actor behavior is updated in runtime?
 
