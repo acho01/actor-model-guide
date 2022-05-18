@@ -216,6 +216,109 @@ count can become arbitrarily large. This indeterminacy is the key element of syn
 therefore if you try to acces 1 actor state from 2 different messages, there is indeterminacy in that, and here comes the arbiter
 arbiter provides this indeterminacy of arrived messages. (not sure yet if this is arbiters correct description)
 
+================================== Concurreny notes =================================
+ Interaction can either take place explicitly through signals or messages, or implicitly by means of shared access
+to mutable resources. The use of shared memory.
+is better thought of as a computer architectural optimization that implements the fastest possible inter process communication.
+Message passing semantics offer the advantage that even when threads migrate from one machine to
+another, the operational semantics do not change.
+The Actor model is a model of concurrent computation that evolves
+around the notion of “Actors”. The model finds its foundations in physics
+instead of mathematics or logic. Similar to the philosophy of objectorientated programming languages where everything is an object that
+provides methods and maintains some state, the Actor model reasons
+about entities in terms of stateful actors that can exchange messages.
+In response to a message it receives, an actor can concurrently:
+• send a finite number of messages to other actors;
+• create a finite number of new actors;
+• determine how to handle the next incoming message.
+As these actions could be carried out concurrently, there is no assumed
+order to them. Hence messages that are sent concurrently, arrive in arbitrary order. Perhaps a bit surprisingly, this also applies to messages sent
+to the same actor. This is due to the fact that sending and receiving is
+decoupled and thus communication between actors is asynchronous.
+
+===
+Concurrent operation and asynchronous communication makes that
+there is no restriction on message arrival order at all.
+
+we can apply stop/go counter example here and show that indeterminacy in message ordering inside actors can cause
+an arbitrary long number as counter before stop message arrives.
+Actors have addresses, and thats it. They live in different address spaces. The great thing about this abstraction
+is that it does not restrict us "where" these addresses can be. Thats why with slightly differen implementation we can send
+messages to actors on different machines and address spaces.
+The principal inventor of Erlang, Joe Armstrong, argues that the
+world we live in is inherently concurrent, thereby making it paradoxical
+that the program languages that we use to write programs that interact
+with the world, are predominantly sequential. He blames this state of affairs for the common conception that concurrent programming is difficult
+and poses that this is not due to the nature of concurrency itself. With
+Erlang, he raised a programming language in which writing concurrent
+programs is the default mode of expression. Analogous with object orientation, he coined the term “concurrency oriented programming” [1] to
+characterize Erlang as a language that has good support for concurrency.
+
+
+===Same Holds for akka===== and any other actor model implemenation
+Kernel threads are too heavy-weight in terms of creation time and
+context switching overhead to support massive parallelism, let alone that
+they are also quite limited in the number available. Therefore, Erlang
+makes use of so called light-weight processes (LWP), of which multiple
+run in user space within a single kernel thread, hence sharing a single
+address space and system resources. The scheduling of Erlang processes
+as LWPs is taken care of by the Erlang execution environment that is 
+implemented through a virtual machine (VM). Like Java or Python, Erlang
+uses a stack-based byte-code VM.
+
+
+========== Well Said ==========
+A major advantage of having a true concurrent model of computation
+underlying the programming language, is that concurrency is no longer
+a property of the operating system, but a property of the programming
+language and the accompanied execution environment. This means that
+concurrent behavior of a program is the same on any platform, regardless of any underlying scheduling order, 
+issues with synchronization, or the
+amount of available resources. The only notable difference between execution on different systems should be the speed of it.
+
+====== Another well said about erlang, that holds for actors in general ==========
+Erlang systems typically comprise large numbers of processes. When
+having so many processes, not much harm is done when a single process
+dies. This as opposed to sequential programs that by themselves are
+single points of failure. Single threaded programs only have a single chance
+to recover from an error or handle a certain exception, an Erlang system
+is much more flexible. The basic idea is that processes fall into two categories; 
+workers that carry out some computation, and supervisors that
+monitor the workers and undertake appropriate action when required. An
+important argument for this scheme is that local error handling and recovery
+is simply not always possible, e.g. in the case of hardware failure.
+Therefore, letting failing processes die while having supervisors to restart
+them, allows for a very high level of fault tolerance. Another interesting feature 
+that constitutes to the high level of availability that can be
+achieved in Erlang systems, is hot code replacement. The message passing
+paradigm in combination with pattern matching allows for the exchange
+of code segments that define subsequent behavior. So without bringing
+the entire system to a hold, individual components can be updated, all
+while continuing service.
+
+
+
+=========================================================
+Encapsulation:
+The actor runtime guarantees thread safety of actor interactions
+only if actors communicate only by passing messages. However,
+in Scala Actors it is possible for an actor to directly call a (public)
+method on a different actor instance. This breaks encapsulation and
+can lead to race conditions if the state of the target actor is accessed
+concurrently [10].
+To prevent such encapsulation breaches, in Akka actors have a
+very limited interface, ActorRef, which basically only provides
+methods to send or forward messages to its actor. Akka has builtin checks to ensure that no direct reference to an instance of an
+Actor subclass is accessible after an actor is created. This mechanism works
+surprisingly well in practice, although it can be circumvented
+
+akka provides maximum encapsualtion for actors, when creating actor in akka it returns only its referenc object
+which has very limited API, you can just send messages to that actor. 
+If we keep actors comunicate only with messages high level of encapsulation will be achieved.
+
+===========  Actor Runtime ===============
+The main thing about actor runtime is lightweight threads and high performance. Let's discuss
+how akka runtime manages these 2 great capabilities.
 
 How exactly threads operate for actors?
 How actor behavior is updated in runtime?
