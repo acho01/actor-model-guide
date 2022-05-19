@@ -117,3 +117,9 @@ The Actor Model** https://people.eecs.berkeley.edu/~marten/pdf/tamt.pdf
 
 **Gul Agha's Doctoral Dissertation on Actor Model** https://dspace.mit.edu/handle/1721.1/6952
 This resource looks like a A-Z book about actor model.
+
+**Comprehensive intro to Akka** https://markusjura.github.io/akka-intro-slides/#/1
+Short and very informative resource to get idea aroung akka.
+
+**Up, Up, and Out: Scaling Software with Akka** https://www.youtube.com/watch?v=GBvtE61Wrto&list=WL&index=33&t=2221s
+Great talk about akka
