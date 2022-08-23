@@ -123,3 +123,6 @@ Short and very informative resource to get idea aroung akka.
 
 **Up, Up, and Out: Scaling Software with Akka** https://www.youtube.com/watch?v=GBvtE61Wrto&list=WL&index=33&t=2221s
 Great talk about akka
+
+**Actor supervision Akka** https://petabridge.com/blog/how-actors-recover-from-failure-hierarchy-and-supervision/#:~:text=You%20may%20also%20hear%20people,to%20isolate%2Fprotect%20the%20parent.
+Great blog about supervision and error kernel pattern in akka
